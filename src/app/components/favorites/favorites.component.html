@@ -7,16 +7,14 @@
 <div class="row justify-content-center">
     <ng-container *ngFor="let location of favoriteList$ | async">
         <div class="col-12 col-sm-6 col-md-4 col-lg-4  col-xl-2">
-            <app-weather-item [useCurrentWeather]="true" [locationData]="location">
+            <app-weather-item [locationData]="location" [isFavorite]="true">
             </app-weather-item>
         </div>
     </ng-container>
 
     <ng-container *ngIf="(favoriteList$ | async)?.length > 0">
             <button mat-mini-fab color="primary" class="float" (click)="addFavorites()">
-                <span class="material-icons header-icon">
-                    add
-                </span>
+                <mat-icon>add</mat-icon>
             </button>
     </ng-container>
 
@@ -29,9 +27,7 @@
         </div>
         <app-weather-icon></app-weather-icon>
         <button mat-mini-fab color="primary" (click)="addFavorites()">
-            <span class="material-icons header-icon">
-                add
-            </span>
+            <mat-icon>add</mat-icon>
         </button>
     </div>
 

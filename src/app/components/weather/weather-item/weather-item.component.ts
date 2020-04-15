@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FavoritesService } from '../../favorites/favorites.service';
-import { LocationModel } from '../models/locations.model';
-import { WeatherItemModel } from '../models/weather-item.model';
+import { LocationModel } from '../../../providers/models/locations.model';
+import { WeatherItemModel } from '../../../providers/models/weather-item.model';
 import { WeatherService } from '../weather.service';
 
 @Component({
@@ -14,30 +14,25 @@ export class WeatherItemComponent implements OnInit {
 
   @Input() weatherItem?: WeatherItemModel;
   @Input() locationData: LocationModel = null;
-  @Input() useCurrentWeather = false;
+  @Input() isFavorite = false;
 
   isDataReady = false;
-  includedInFavorite = false;
 
   constructor(
     private weatherService: WeatherService,
     private favoriteService: FavoritesService,
-    private _snackBar: MatSnackBar
+    private toastService: MatSnackBar
 
   ) { }
 
   ngOnInit(): void {
-    if (this.useCurrentWeather && this.locationData) {
+    if (this.isFavorite && this.locationData) {
       this.getCurrentWeather();
-      this.checkIfIncludedInFavorite();
     } else {
       this.isDataReady = true;
     }
   }
 
-  checkIfIncludedInFavorite() {
-    this.includedInFavorite = this.favoriteService.checkIfExist(this.locationData.Key);
-  }
 
   removeFromFavorite() {
     this.favoriteService.removeFromFavorite(this.locationData.Key);
@@ -53,7 +48,7 @@ export class WeatherItemComponent implements OnInit {
   }
 
   showToast(message: string) {
-    this._snackBar.open(message, '', {
+    this.toastService.open(message, '', {
       duration: 2000,
     });
   }

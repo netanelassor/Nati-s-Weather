@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { LocationModel } from '../../weather/models/locations.model';
+import { LocationModel } from '../../../providers/models/locations.model';
 import { WeatherService } from '../../weather/weather.service';
 import { Observable } from 'rxjs';
 

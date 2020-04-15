@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { WeatherItemModel } from './models/weather-item.model';
-import { CurrentWeather } from './models/current-weather.model';
-import { DailyForecasts } from './models/daily-forecasts.model';
-import { LocationModel } from './models/locations.model';
+import { WeatherItemModel } from '../../providers/models/weather-item.model';
+import { CurrentWeather } from '../../providers/models/current-weather.model';
+import { DailyForecasts } from '../../providers/models/daily-forecasts.model';
+import { LocationModel } from '../../providers/models/locations.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +15,14 @@ export class WeatherService {
 
   defaultLocation: LocationModel = {
     Key: 215854,
-    LocalizedName: "Tel Aviv",
+    LocalizedName: 'Tel Aviv',
     Country: {
-      ID: "IL",
-      LocalizedName: "Israel"
+      ID: 'IL',
+      LocalizedName: 'Israel'
     }
   };
 
-  selectedLocation$ = new BehaviorSubject<LocationModel>(this.defaultLocation);
-
+  private selectedLocationSubject = new BehaviorSubject<LocationModel>(this.defaultLocation);
 
   constructor(
     private http: HttpClient
@@ -31,14 +30,10 @@ export class WeatherService {
 
 
   getWeatherForecast(locationKey: number): Observable<WeatherItemModel[]> {
-
     return this.http
       .get
       (
-        environment.baseApiUrl +
-        '/forecasts/v1/daily/5day/' + locationKey +
-        '?apikey=' + environment.apiKey +
-        '&metric=true'
+        `${environment.baseApiUrl}/forecasts/v1/daily/5day/${locationKey}?apikey=${environment.apiKey}&metric=true`
       )
       .pipe(
         map((response: any) =>
@@ -50,18 +45,13 @@ export class WeatherService {
   getLocationSuggestion(searchInput: string): Observable<any> {
     return this.http
       .get(
-        environment.baseApiUrl +
-        '/locations/v1/cities/autocomplete' +
-        '?apikey=' + environment.apiKey +
-        '&q=' + searchInput
+        `${environment.baseApiUrl}/locations/v1/cities/autocomplete?apikey=${environment.apiKey}&q=${searchInput}`
       );
   }
 
   getCurrentWeatherByLocation(locationKey: number): Observable<WeatherItemModel> {
     return this.http.get(
-      environment.baseApiUrl +
-      '/currentconditions/v1/' + locationKey +
-      '?apikey=' + environment.apiKey
+      `${environment.baseApiUrl}/currentconditions/v1/${locationKey}?apikey=${environment.apiKey}`
     ).pipe(
       map((currentWeather: any) =>
         this.convertCurrentWeatherToMainModel(currentWeather[0])
@@ -71,26 +61,27 @@ export class WeatherService {
   getLocationKeyByGeoPosition(lat: number, lon: number): Observable<LocationModel> {
     return this.http
       .get(
-        environment.baseApiUrl +
-        '/locations/v1/cities/geoposition/search' +
-        '?apikey=' + environment.apiKey +
-        '&q=' + lat + ',' + lon
+        `${environment.baseApiUrl}/locations/v1/cities/geoposition/search?apikey=${environment.apiKey}&q=${lat},${lon}`
       ).pipe(
         map((result: any) =>
           this.convertLocationToMainModel(result)
         ));
   }
 
+
+
+
+
   setSelectedLocation(location: LocationModel): Observable<LocationModel> {
-    this.selectedLocation$.next(location);
-    return this.selectedLocation$.asObservable();
+    this.selectedLocationSubject.next(location);
+    return this.selectedLocationSubject.asObservable();
   }
 
   getSelectedLocation(): Observable<LocationModel> {
-    return this.selectedLocation$.asObservable();
+    return this.selectedLocationSubject.asObservable();
   }
 
-  findMe(): void {
+  getDeviceLocation(): void {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.getLocationKeyByGeoPosition(position.coords.latitude, position.coords.longitude).subscribe((result: LocationModel) => {
@@ -99,9 +90,13 @@ export class WeatherService {
       });
     } else {
       this.setSelectedLocation(this.defaultLocation);
-      alert("Geolocation is not supported by this browser.");
+      alert('Geolocation is not supported by this browser.');
     }
   }
+
+
+
+
 
   convertCurrentWeatherToMainModel(currentWeather: CurrentWeather): WeatherItemModel {
     const weatherItem: WeatherItemModel = {

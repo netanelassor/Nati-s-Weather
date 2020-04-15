@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
-import { LocationModel } from '../weather/models/locations.model';
+import { LocationModel } from '../../providers/models/locations.model';
 import { WeatherService } from '../weather/weather.service';
 import { AddCityModalComponent } from './add-city-modal/add-city-modal.component';
 import { FavoritesService } from './favorites.service';
@@ -20,7 +20,7 @@ export class FavoritesComponent implements OnInit {
     private favoriteService: FavoritesService,
     private weatherService: WeatherService,
     public dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    private toastService: MatSnackBar
 
   ) { }
 
@@ -30,10 +30,6 @@ export class FavoritesComponent implements OnInit {
 
   getFavorites(): void {
     this.favoriteList$ = this.favoriteService.getFavoriteList();
-  }
-
-  getCurrentWeather(location: LocationModel) {
-    return this.weatherService.getCurrentWeatherByLocation(location.Key);
   }
 
   addFavorites(): void {
@@ -54,7 +50,7 @@ export class FavoritesComponent implements OnInit {
   }
 
   showToast(message: string): void {
-    this._snackBar.open(message, '', {
+    this.toastService.open(message, '', {
       duration: 2000,
     });
   }

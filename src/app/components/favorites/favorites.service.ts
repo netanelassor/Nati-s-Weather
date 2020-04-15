@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { LocationModel } from '../weather/models/locations.model';
+import { LocationModel } from '../../providers/models/locations.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FavoritesService {
 
-  favoriteList$ = new BehaviorSubject<LocationModel[]>([]);
+  private favoriteListSubject = new BehaviorSubject<LocationModel[]>([]);
   storedFavoriteList: LocationModel[] = [];
-
+  private favoriteLocalStorageName: 'weather-app.favorites';
   constructor() { }
 
   addToFavorites(location: LocationModel): boolean {
@@ -18,31 +18,31 @@ export class FavoritesService {
 
     if (isNotExist) {
       this.storedFavoriteList.push(location);
-      this.favoriteList$.next([...this.storedFavoriteList]);
-      localStorage.setItem('favorites', JSON.stringify(this.storedFavoriteList));
+      this.favoriteListSubject.next([...this.storedFavoriteList]);
+      localStorage.setItem(this.favoriteLocalStorageName, JSON.stringify(this.storedFavoriteList));
     }
 
     return isNotExist;
   }
 
   getFavoriteList(): Observable<LocationModel[]> {
-    const localStorageData = localStorage.getItem("favorites");
+    const localStorageData = localStorage.getItem(this.favoriteLocalStorageName);
     this.storedFavoriteList = JSON.parse(localStorageData);
 
     if (this.storedFavoriteList) {
-      this.favoriteList$.next([...this.storedFavoriteList]);
+      this.favoriteListSubject.next([...this.storedFavoriteList]);
     } else {
       this.storedFavoriteList = [];
-      this.favoriteList$.next([...this.storedFavoriteList]);
+      this.favoriteListSubject.next([...this.storedFavoriteList]);
     }
-    return this.favoriteList$.asObservable();
+    return this.favoriteListSubject.asObservable();
   }
 
 
   removeFromFavorite(locationKey: number) {
     this.storedFavoriteList = this.storedFavoriteList.filter(f => f.Key !== locationKey);
-    this.favoriteList$.next([...this.storedFavoriteList]);
-    localStorage.setItem('favorites', JSON.stringify(this.storedFavoriteList));
+    this.favoriteListSubject.next([...this.storedFavoriteList]);
+    localStorage.setItem(this.favoriteLocalStorageName, JSON.stringify(this.storedFavoriteList));
   }
 
   checkIfExist(locationKey: number): boolean {
