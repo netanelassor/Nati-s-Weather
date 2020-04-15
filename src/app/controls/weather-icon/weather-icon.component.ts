@@ -103,9 +103,9 @@ export class WeatherIconComponent implements OnInit {
       '37',
       sanitizer.bypassSecurityTrustResourceUrl('assets/icons/cloudy.svg'));
 
-      iconRegistry.addSvgIcon(
-        'weather',
-        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/weather.svg'));
+    iconRegistry.addSvgIcon(
+      'weather',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/weather.svg'));
   }
 
   ngOnInit(): void {

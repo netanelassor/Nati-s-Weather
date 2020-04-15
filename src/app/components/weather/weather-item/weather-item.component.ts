@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FavoritesService } from '../../favorites/favorites.service';
 import { LocationModel } from '../models/locations.model';
 import { WeatherItemModel } from '../models/weather-item.model';
 import { WeatherService } from '../weather.service';
-import { FavoritesService } from '../../favorites/favorites.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-weather-item',

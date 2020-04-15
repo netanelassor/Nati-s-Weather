@@ -28,7 +28,7 @@ export class FavoritesComponent implements OnInit {
     this.getFavorites();
   }
 
-  getFavorites() {
+  getFavorites(): void {
     this.favoriteList$ = this.favoriteService.getFavoriteList();
   }
 
@@ -36,7 +36,7 @@ export class FavoritesComponent implements OnInit {
     return this.weatherService.getCurrentWeatherByLocation(location.Key);
   }
 
-  addFavorites() {
+  addFavorites(): void {
     const dialogRef = this.dialog.open(AddCityModalComponent, {
       width: '500px',
       data: {}
@@ -53,7 +53,7 @@ export class FavoritesComponent implements OnInit {
     });
   }
 
-  showToast(message: string) {
+  showToast(message: string): void {
     this._snackBar.open(message, '', {
       duration: 2000,
     });

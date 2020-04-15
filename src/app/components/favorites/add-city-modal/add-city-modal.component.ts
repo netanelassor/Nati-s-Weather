@@ -22,7 +22,7 @@ export class AddCityModalComponent implements OnInit {
     this.getSelectedLocation();
   }
 
-  getSelectedLocation() {
+  getSelectedLocation(): void {
     this.weatherService.getSelectedLocation().subscribe(locations => {
       this.selectedLocation = locations;
     });

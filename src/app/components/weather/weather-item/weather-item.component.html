@@ -20,8 +20,6 @@
 
     </div>
     <div class="card-body">
-        <!-- <mat-icon class="weather-icon" svgIcon="{{weatherItem.weatherIcon}}" aria-hidden="false"></mat-icon> -->
-
         <p class="card-text">
             <span class="degree"> {{weatherItem.temperature.max.Value | number: '1.0-0'}}°</span>
             <span class="degree min" *ngIf="weatherItem.temperature.min">
