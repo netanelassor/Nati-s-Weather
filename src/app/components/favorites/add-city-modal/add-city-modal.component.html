@@ -1,0 +1,8 @@
+<h1>Add a city to favorite</h1>
+
+<app-search-location></app-search-location>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="closeModal()">close</button>
+    <button mat-button color="primary" [mat-dialog-close]="selectedLocation" cdkFocusInitial>Add</button>
+</div>

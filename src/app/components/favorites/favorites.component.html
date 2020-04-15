@@ -1,0 +1,39 @@
+<div class="row title-wrapper justify-content-center">
+    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+        <h1 class="title">My Favorites</h1>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <ng-container *ngFor="let location of favoriteList$ | async">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4  col-xl-2">
+            <app-weather-item [useCurrentWeather]="true" [locationData]="location">
+            </app-weather-item>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="(favoriteList$ | async)?.length > 0">
+            <button mat-mini-fab color="primary" class="float" (click)="addFavorites()">
+                <span class="material-icons header-icon">
+                    add
+                </span>
+            </button>
+    </ng-container>
+
+    <div class="text-center" *ngIf="(favoriteList$ | async)?.length === 0">
+        <div class="card-body">
+            <mat-icon class="weather-icon" svgIcon="weather" aria-hidden="false"></mat-icon>
+            <h3 class="text-row-1">Your favorite list is empty...</h3>
+            <h3 class="text-row-2">How would you know what to wear?</h3>
+            <h3 class="text-row-3">Add a city to your favorite list for the answer..</h3>
+        </div>
+        <app-weather-icon></app-weather-icon>
+        <button mat-mini-fab color="primary" (click)="addFavorites()">
+            <span class="material-icons header-icon">
+                add
+            </span>
+        </button>
+    </div>
+
+
+</div>

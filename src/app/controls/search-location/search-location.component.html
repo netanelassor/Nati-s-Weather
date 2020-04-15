@@ -1,0 +1,22 @@
+<div class="row">
+
+    <div class="col-12 search-box-wrapper">
+        <mat-form-field appearance="standard" class="search-box-field">
+            <mat-label>Search Weather By Location</mat-label>
+            <mat-icon matSuffix>search</mat-icon>
+
+            <input matInput type="text" placeholder="select a city" aria-label="Number" [matAutocomplete]="auto"
+                [formControl]="searchControl">
+
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn"
+                (optionSelected)='selectLocation($event.option.value)'>
+                <ng-container *ngIf="searchControl.value && searchControl.value.length > 2">
+                    <mat-option *ngFor="let option of suggestedLocationList$ | async" [value]="option">
+                        <span class="location-name">{{option.LocalizedName}}</span>
+                        <small class="text-muted"> | {{option.Country.LocalizedName}}</small>
+                    </mat-option>
+                </ng-container>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+</div>

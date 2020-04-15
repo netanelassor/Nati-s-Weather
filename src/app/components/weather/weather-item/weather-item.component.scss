@@ -1,0 +1,95 @@
+.weather-weekly-card {
+
+    box-shadow: 0 0 2rem rgba(0, 0, 255, 0.1);
+    background-color: white;
+    border-radius: 25px;
+    border: none;
+    margin-bottom: 50px;
+    transform: scale(1.1) perspective(1500px) rotateY(10deg);
+
+
+    &:hover {
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+        transform: scale(1.1) perspective(1500px) rotateY(15deg);
+    }
+
+    .card-header {
+        background-color: transparent;
+        border: none;
+
+        .location {
+            font-size: 24px;
+            text-align: center;
+            font-weight: 500;
+            color: var(--text-color1);
+        }
+
+        .date {
+            font-size: 28px;
+            font-weight: 500;
+            text-align: center;
+            color: var(--text-color1);
+        }
+
+        .weather-icon {
+            height: 120px;
+            width: 120px;
+        }
+    }
+
+    .card-body {
+
+        .card-text {
+            position: sticky;
+            padding-top: 12px;
+        }
+
+        .weather-icon {
+            height: 100px;
+            width: 100px;
+            position: absolute;
+            left: 65%;
+            top: 30%;
+        }
+
+        .degree {
+            color: var(--text-color5);
+            font-weight: 700;
+            font-size: 50px;
+
+            &.min {
+                color: var(--text-color3);
+                font-weight: normal;
+                font-size: 20px;
+
+            }
+        }
+    }
+
+    .summary {
+        padding: 10px 0;
+        font-size: 16px;
+        text-align: center;
+        color: var(--text-color2);
+    }
+
+}
+
+
+.btn-remove-favorite {
+    padding: 10px 20px;
+}
+
+
+@media only screen and (max-width: 576px) {
+    .weather-weekly-card {
+        transform: none !important;
+        padding: 0;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+
+        &:hover {
+            transform: none!important;
+            padding: 0;
+        }
+    }
+}

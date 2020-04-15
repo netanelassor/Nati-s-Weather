@@ -1,0 +1,59 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300);
+@import url(https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@500,300);
+
+html,
+body {
+    background-color: #F3F3F3;
+    font-family: 'Roboto', sans-serif;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.mat-toolbar.mat-primary {
+    background: white;
+    color: #b463a6;
+}
+
+
+.header {
+    background: #654ea3;
+    background: -webkit-linear-gradient(to bottom, #eaafc8, #654ea3);
+    background: linear-gradient(to bottom, #eaafc8, #654ea3);
+    background-color: linear-gradient(to bottom, #654ea3, #eaafc8);
+    height: 42%;
+    background-color: linear-gradient(to bottom, #654ea3, #eaafc8);
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+    clip-path: polygon(0 0, 161% 0, -256% 99vh, 0 100%);
+    position: absolute;
+    width: 100%;
+    clip-path: polygon(0 0, 117% 0, -50% 60vh, 0 100%);
+
+
+    .brand-box {
+        position: absolute;
+        top: 40px;
+        left: 40px;
+        color:white;
+  }
+  
+  .brand { font-size: 20px; }
+  
+}
+
+.logo-holder{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    
+    img{
+        height: 45px;
+    }
+
+    span{
+        font-weight:normal;
+        font-family: 'Baloo Tamma 2', cursive;
+        }
+
+}

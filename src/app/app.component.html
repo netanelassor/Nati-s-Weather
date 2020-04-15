@@ -1,0 +1,36 @@
+<!-- <nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Nati'sWeather</a>
+    <ul class="navbar-nav mr-auto">
+
+    </ul>
+    <button mat-button [routerLink]="['/favorites']">
+        <span class="material-icons header-icon">
+            star
+        </span>
+    </button>
+</nav> -->
+<!-- <header class="header">
+    <div class="brand-box">
+		<span class="brand">Nati'sWeather</span>
+	</div>
+</header> -->
+<mat-toolbar color="primary" >
+    <mat-toolbar-row>
+        <div class="logo-holder" [routerLink]="['/home']">
+            <img src="../assets/img/logo.png">
+            <span href="#">Nati'sWeather</span>
+        </div>
+        <span class="spacer"></span>
+        <button mat-button [routerLink]="['/favorites']">
+            <span class="material-icons header-icon">
+                star
+            </span>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="container">
+
+    <router-outlet></router-outlet>
+
+</div>

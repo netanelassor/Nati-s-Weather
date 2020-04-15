@@ -1,0 +1,52 @@
+.title-wrapper{
+    padding: 50px;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: var(--text-color4);
+    position: relative;
+    text-align: center;
+
+    .title{
+        font-weight:500;
+        color: white;
+        font-size:40px;
+    }
+}
+
+.add-card {
+    box-shadow: 0 0 2rem rgba(0, 0, 255, 0.1);
+    background-color: white;
+    border-radius: 25px;
+    margin-bottom: 30px;
+    transform: scale(1.1) perspective(1500px) rotateY(10deg);
+    border: 1px dashed lightgrey;
+}
+
+.float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+}
+
+.weather-icon {
+    height: 100%;
+    width: 100%;
+}
+
+
+.text-row-1 {
+    color: var(--text-color2);
+}
+
+.text-row-2 {
+    color: var(--text-color4);
+    font-size: 22px;
+}
+
+.text-row-3 {
+    color: var(--text-color1);
+    font-size: 18px;
+}

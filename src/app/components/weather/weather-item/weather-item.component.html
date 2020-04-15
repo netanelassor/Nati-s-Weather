@@ -1,0 +1,37 @@
+<div class="card text-center weather-weekly-card" *ngIf="isDataReady">
+
+    <ng-container *ngIf="includedInFavorite">
+        <button mat-icon-button color="warn" class="btn-remove-favorite" (click)="removeFromFavorite()">
+            <mat-icon>remove_circle_outline</mat-icon>
+            Remove
+        </button>
+    </ng-container>
+
+    <div class="card-header">
+
+        <mat-icon class="weather-icon" svgIcon="{{weatherItem.weatherIcon}}" aria-hidden="false"></mat-icon>
+        <div class="location" *ngIf="locationData">
+            {{locationData.LocalizedName}}
+            <small class="text-muted"> |
+                {{locationData.Country.LocalizedName}}
+            </small>
+        </div>
+        <div class="date" *ngIf="!locationData">{{weatherItem.date | date:'EEEE' }}</div>
+
+    </div>
+    <div class="card-body">
+        <!-- <mat-icon class="weather-icon" svgIcon="{{weatherItem.weatherIcon}}" aria-hidden="false"></mat-icon> -->
+
+        <p class="card-text">
+            <span class="degree"> {{weatherItem.temperature.max.Value | number: '1.0-0'}}°</span>
+            <span class="degree min" *ngIf="weatherItem.temperature.min">
+                {{weatherItem.temperature.min?.Value | number:'1.0-0'}}°</span>
+        </p>
+        <div class="summary">
+            {{weatherItem.weatherDescription}}
+        </div>
+    </div>
+
+</div>
+
+<app-weather-icon></app-weather-icon>

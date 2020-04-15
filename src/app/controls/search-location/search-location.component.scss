@@ -1,0 +1,13 @@
+.search-box-wrapper {
+    text-align: center;
+}
+
+@media (min-width: 599px) {
+    .search-box-field {
+        min-width: 20rem;
+    }
+}
+
+.location-name{
+    color:var(--text-color5);
+}
