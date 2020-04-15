@@ -13,20 +13,24 @@ import { LocationModel } from './models/locations.model';
 })
 export class WeatherService {
 
-  selectedLocation$ = new BehaviorSubject<LocationModel>({
+  defaultLocation: LocationModel = {
     Key: 215854,
     LocalizedName: "Tel Aviv",
     Country: {
       ID: "IL",
       LocalizedName: "Israel"
     }
-  });
+  };
+
+  selectedLocation$ = new BehaviorSubject<LocationModel>(this.defaultLocation);
+
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getWeatherForecast(locationKey: number): Observable<any> {
+
+  getWeatherForecast(locationKey: number): Observable<WeatherItemModel[]> {
 
     return this.http
       .get
@@ -53,7 +57,7 @@ export class WeatherService {
       );
   }
 
-  getCurrentWeatherByLocation(locationKey: number): Observable<any> {
+  getCurrentWeatherByLocation(locationKey: number): Observable<WeatherItemModel> {
     return this.http.get(
       environment.baseApiUrl +
       '/currentconditions/v1/' + locationKey +
@@ -62,6 +66,41 @@ export class WeatherService {
       map((currentWeather: any) =>
         this.convertCurrentWeatherToMainModel(currentWeather[0])
       ));
+  }
+
+  getLocationKeyByGeoPosition(lat: number, lon: number): Observable<LocationModel> {
+    return this.http
+      .get(
+        environment.baseApiUrl +
+        '/locations/v1/cities/geoposition/search' +
+        '?apikey=' + environment.apiKey +
+        '&q=' + lat + ',' + lon
+      ).pipe(
+        map((result: any) =>
+          this.convertLocationToMainModel(result)
+        ));
+  }
+
+  setSelectedLocation(location: LocationModel): Observable<LocationModel> {
+    this.selectedLocation$.next(location);
+    return this.selectedLocation$.asObservable();
+  }
+
+  getSelectedLocation(): Observable<LocationModel> {
+    return this.selectedLocation$.asObservable();
+  }
+
+  findMe(): void {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.getLocationKeyByGeoPosition(position.coords.latitude, position.coords.longitude).subscribe((result: LocationModel) => {
+          this.setSelectedLocation(result);
+        });
+      });
+    } else {
+      this.setSelectedLocation(this.defaultLocation);
+      alert("Geolocation is not supported by this browser.");
+    }
   }
 
   convertCurrentWeatherToMainModel(currentWeather: CurrentWeather): WeatherItemModel {
@@ -83,6 +122,19 @@ export class WeatherService {
     return weatherItem;
   }
 
+  convertLocationToMainModel(location: any): LocationModel {
+    const newLocationModel: LocationModel = {
+      Key: location.Key,
+      LocalizedName: location.LocalizedName,
+      Country: {
+        ID: location.Country.ID,
+        LocalizedName: location.Country.LocalizedName
+      }
+    };
+    return newLocationModel;
+  }
+
+
   convertDailyWeatherToMainModel(dailyWeatherData: DailyForecasts[]): WeatherItemModel[] {
     const weatherItem: WeatherItemModel[] = dailyWeatherData.map(item => ({
       date: item.Date,
@@ -94,14 +146,6 @@ export class WeatherService {
       }
     }));
     return weatherItem;
-  }
-
-  setSelectedLocation(location: LocationModel): Observable<LocationModel> {
-     this.selectedLocation$.next(location);
-     return  this.selectedLocation$.asObservable();
-  }
-  getSelectedLocation(): Observable<LocationModel> {
-    return  this.selectedLocation$.asObservable();
   }
 
 }

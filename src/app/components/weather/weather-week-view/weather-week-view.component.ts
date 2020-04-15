@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 import { FavoritesService } from '../../favorites/favorites.service';
 import { LocationModel } from '../models/locations.model';
 import { WeatherItemModel } from '../models/weather-item.model';
 import { WeatherService } from '../weather.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -34,6 +33,7 @@ export class WeatherWeekViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.weatherService.findMe();
     this.selectedLocation$ = this.weatherService.getSelectedLocation();
     this.selectedLocation$.subscribe(
       location => {
@@ -41,8 +41,6 @@ export class WeatherWeekViewComponent implements OnInit {
       }
     );
   }
-
-
 
   getWeatherForecast(locationKey: number): void {
     this.weeklyData$ = this.weatherService.getWeatherForecast(locationKey);
@@ -72,12 +70,11 @@ export class WeatherWeekViewComponent implements OnInit {
     this.getWeatherForecast(location.Key);
     this.getCurrentWeatherByLocation(location.Key);
     this.includedInFavorite = this.favoriteService.checkIfExist(location.Key);
-    console.log(this.includedInFavorite);
   }
 
 
 
-  /////Healper Functions
+  /////Healper Functions/////
 
   displayFn(location: LocationModel): string {
     if (location) { return location.LocalizedName; }
@@ -125,8 +122,6 @@ export class WeatherWeekViewComponent implements OnInit {
         break;
 
       default:
-        console.log("default");
-
         this.currentWeatherIcon = "assets/img/cloud.svg";
         break;
     }

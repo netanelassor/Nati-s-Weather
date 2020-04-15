@@ -1,0 +1,42 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$weather-app-primary: (
+    50 : #fbeded,
+    100 : #f6d1d1,
+    200 : #f0b3b3,
+    300 : #e99494,
+    400 : #861d73,
+    500 : #861d73,
+    600 : #861d73,
+    700 : #861d73,
+    800 : #861d73,
+    900 : #861d73,
+    A100 : #ffffff,
+    A200 : #ffe2e2,
+    A400 : #ffafaf,
+    A700 : #ff9696,
+    contrast: (
+        50 : #ffffff,
+        100 : #ffffff,
+        200 : #ffffff,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #ffffff,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$weather-app-primary: mat-palette($weather-app-primary);
+$weather-app-accent:  mat-palette($mat-pink);
+
+$weather-app-theme: mat-light-theme($weather-app-primary, $weather-app-accent);
+
+@include angular-material-theme($weather-app-theme);
