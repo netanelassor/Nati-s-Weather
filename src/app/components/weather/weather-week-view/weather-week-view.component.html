@@ -13,8 +13,9 @@
     </div>
     <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
         <h2 class="location-name"> {{selectedLocation?.LocalizedName}}
-            <small class="country"> |
-                selectedLocation?.Country.LocalizedName}}
+            <small class="country"> 
+                |
+                {{selectedLocation?.Country?.LocalizedName}}
             </small>
         </h2>
         <h3 class="weather-description">{{currentWeather?.weatherDescription}}

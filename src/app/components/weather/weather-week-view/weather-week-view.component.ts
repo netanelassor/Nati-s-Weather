@@ -34,7 +34,8 @@ export class WeatherWeekViewComponent implements OnInit {
     this.weatherService.getDeviceLocation();
 
     this.weatherService.getSelectedLocation().subscribe(
-      (location) => {
+      (location: LocationModel) => {
+        this.selectedLocation = location;
         this.updateLocation(location);
       });
 
