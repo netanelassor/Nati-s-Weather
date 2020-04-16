@@ -5,13 +5,13 @@
         <app-search-location></app-search-location>
     </div>
 
-    <div class="col-12 col-sm-2 col-md-1 col-lg-1 col-xl-1">
+    <div class="col-2 col-sm-2 col-md-1 col-lg-1 col-xl-1">
         <button mat-mini-fab color="primary" class="favorite-button" (click)="setLocationAsFavorite()"
             *ngIf="!includedInFavorite">
             <mat-icon>star_outline</mat-icon>
         </button>
     </div>
-    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+    <div class="col-10 col-sm-8 col-md-8 col-lg-8 col-xl-8">
         <h2 class="location-name"> {{selectedLocation?.LocalizedName}}
             <small class="country"> 
                 |

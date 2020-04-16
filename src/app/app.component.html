@@ -1,17 +1,5 @@
-<mat-toolbar color="primary">
-    <mat-toolbar-row>
-        <div class="logo-holder" [routerLink]="['/home']">
-            <img src="../assets/img/logo.png">
-            <span href="#">Nati's Weather</span>
-        </div>
-        <span class="spacer"></span>
-        <button mat-button [routerLink]="['/favorites']">
-            <mat-icon>star</mat-icon>
-            Favorites
-        </button>
-    </mat-toolbar-row>
-</mat-toolbar>
 
+<app-main-header></app-main-header>
 <div class="container">
 
     <router-outlet></router-outlet>

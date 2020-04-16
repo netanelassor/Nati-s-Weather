@@ -48,7 +48,7 @@ export class WeatherWeekViewComponent implements OnInit {
   getCurrentWeatherByLocation(locationKey: number): void {
     this.weatherService.getCurrentWeatherByLocation(locationKey).subscribe(result => {
       this.currentWeather = result;
-      this.currentWeatherIcon = `assets/img/${this.getCurrentWeatherIcon()}.svg`;
+      this.currentWeatherIcon = `assets/img/${this.weatherService.getCurrentWeatherIcon(this.currentWeather.weatherIcon)}.svg`;
     });
   }
 
@@ -75,31 +75,5 @@ export class WeatherWeekViewComponent implements OnInit {
       duration: 2000,
     });
   }
-
-
-  getCurrentWeatherIcon() {
-    if (this.currentWeather.weatherIcon <= 5) {
-      return 'sunny';
-    }
-    if (this.currentWeather.weatherIcon === 6) {
-      return 'sunny-cloudy';
-    }
-    if (this.currentWeather.weatherIcon <= 11) {
-      return 'cloud';
-    }
-    if (this.currentWeather.weatherIcon <= 18) {
-      return 'rain';
-    }
-    if (this.currentWeather.weatherIcon <= 29) {
-      return 'snow';
-    }
-    if (this.currentWeather.weatherIcon <= 30) {
-      return 'sunny';
-    }
-    if (this.currentWeather.weatherIcon <= 44) {
-      return 'night';
-    }
-  }
-
 
 }

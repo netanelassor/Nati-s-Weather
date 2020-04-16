@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <div class="logo-holder" [routerLink]="['/home']">
+            <!-- <img src="../assets/img/logo.png"> -->
+            <img src="assets/img/logo.png">
+
+            <span href="#">{{title}}</span>
+        </div>
+        <span class="spacer"></span>
+        <button mat-button [routerLink]="['/favorites']">
+            <mat-icon>star</mat-icon>
+            Favorites
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>

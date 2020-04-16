@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { LocationModel } from '../../providers/models/locations.model';
 import { WeatherService } from '../weather/weather.service';
 import { AddCityModalComponent } from './add-city-modal/add-city-modal.component';
 import { FavoritesService } from './favorites.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-favorites',
@@ -20,12 +21,14 @@ export class FavoritesComponent implements OnInit {
     private favoriteService: FavoritesService,
     private weatherService: WeatherService,
     public dialog: MatDialog,
-    private toastService: MatSnackBar
+    private toastService: MatSnackBar,
+    private router: Router,
 
   ) { }
 
   ngOnInit(): void {
     this.getFavorites();
+
   }
 
   getFavorites(): void {
@@ -49,12 +52,23 @@ export class FavoritesComponent implements OnInit {
     });
   }
 
+  removeFromFavorite(location: LocationModel) {
+    this.favoriteService.removeFromFavorite(location.Key);
+    const message = location.LocalizedName + ' has been removed';
+    this.showToast(message);
+  }
+
+  getCurrentWeather(location: LocationModel) {
+    this.weatherService.getCurrentWeatherByLocation(location.Key).subscribe(result => {
+      return result;
+    });
+  }
+
   showToast(message: string): void {
     this.toastService.open(message, '', {
       duration: 2000,
     });
   }
-
 
 }
 

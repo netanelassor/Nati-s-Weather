@@ -1,0 +1,22 @@
+.mat-toolbar.mat-primary {
+    background: white;
+    color: var(--text-color1);
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+.logo-holder {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    img {
+        height: 45px;
+    }
+
+    span {
+        font-weight: normal;
+    }
+
+}

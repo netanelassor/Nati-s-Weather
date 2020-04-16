@@ -1,5 +1,9 @@
 .search-box-wrapper {
     text-align: center;
+    
+    .location-name {
+        color: var(--text-color5);
+    }
 }
 
 @media (min-width: 599px) {
@@ -8,6 +12,3 @@
     }
 }
 
-.location-name{
-    color:var(--text-color5);
-}

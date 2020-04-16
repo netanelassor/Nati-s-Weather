@@ -7,7 +7,7 @@
 <div class="row justify-content-center">
     <ng-container *ngFor="let location of favoriteList$ | async">
         <div class="col-12 col-sm-6 col-md-4 col-lg-4  col-xl-2">
-            <app-weather-item [locationData]="location" [isFavorite]="true">
+            <app-weather-item [locationData]="location" [isFavoriteContext]="true" (removeFromFavorite)="removeFromFavorite(location)">
             </app-weather-item>
         </div>
     </ng-container>

@@ -8,44 +8,44 @@ import { LocationModel } from '../../providers/models/locations.model';
 export class FavoritesService {
 
   private favoriteListSubject = new BehaviorSubject<LocationModel[]>([]);
-  storedFavoriteList: LocationModel[] = [];
   private favoriteLocalStorageName: 'weather-app.favorites';
+
   constructor() { }
 
   addToFavorites(location: LocationModel): boolean {
 
     const isNotExist = !this.checkIfExist(location.Key);
-
     if (isNotExist) {
-      this.storedFavoriteList.push(location);
-      this.favoriteListSubject.next([...this.storedFavoriteList]);
-      localStorage.setItem(this.favoriteLocalStorageName, JSON.stringify(this.storedFavoriteList));
+      let newList = this.getFavoritesSync();
+      newList.push(location);
+      this.favoriteListSubject.next(newList);
+      localStorage.setItem(this.favoriteLocalStorageName, JSON.stringify(newList));
     }
 
     return isNotExist;
   }
 
-  getFavoriteList(): Observable<LocationModel[]> {
-    const localStorageData = localStorage.getItem(this.favoriteLocalStorageName);
-    this.storedFavoriteList = JSON.parse(localStorageData);
+  removeFromFavorite(locationKey: number): void {
+    const filteredList = this.getFavoritesSync().filter(f => f.Key !== locationKey);
+    localStorage.setItem(this.favoriteLocalStorageName, JSON.stringify(filteredList));
+    this.favoriteListSubject.next(filteredList);
+  }
 
-    if (this.storedFavoriteList) {
-      this.favoriteListSubject.next([...this.storedFavoriteList]);
-    } else {
-      this.storedFavoriteList = [];
-      this.favoriteListSubject.next([...this.storedFavoriteList]);
+  public getFavoritesSync(): LocationModel[] {
+    const localStorageData = localStorage.getItem(this.favoriteLocalStorageName);
+    if(localStorageData){
+      return JSON.parse(localStorageData);
     }
+    return [];
+  }
+
+  getFavoriteList(): Observable<LocationModel[]> {
+    this.favoriteListSubject.next(this.getFavoritesSync());
     return this.favoriteListSubject.asObservable();
   }
 
-
-  removeFromFavorite(locationKey: number) {
-    this.storedFavoriteList = this.storedFavoriteList.filter(f => f.Key !== locationKey);
-    this.favoriteListSubject.next([...this.storedFavoriteList]);
-    localStorage.setItem(this.favoriteLocalStorageName, JSON.stringify(this.storedFavoriteList));
-  }
-
   checkIfExist(locationKey: number): boolean {
-    return this.storedFavoriteList.find(f => f.Key === locationKey) != null;
+    return this.getFavoritesSync().find(f => f.Key === locationKey) != null;
   }
+
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FavoritesService } from '../../favorites/favorites.service';
 import { LocationModel } from '../../../providers/models/locations.model';
@@ -14,30 +14,25 @@ export class WeatherItemComponent implements OnInit {
 
   @Input() weatherItem?: WeatherItemModel;
   @Input() locationData: LocationModel = null;
-  @Input() isFavorite = false;
+  @Input() isFavoriteContext = false;
+  @Output() removeFromFavorite: EventEmitter<void> = new EventEmitter();
 
   isDataReady = false;
 
   constructor(
-    private weatherService: WeatherService,
-    private favoriteService: FavoritesService,
-    private toastService: MatSnackBar
-
+    private weatherService: WeatherService
   ) { }
 
   ngOnInit(): void {
-    if (this.isFavorite && this.locationData) {
+    if (this.isFavoriteContext && this.locationData) {
       this.getCurrentWeather();
     } else {
       this.isDataReady = true;
     }
   }
 
-
-  removeFromFavorite() {
-    this.favoriteService.removeFromFavorite(this.locationData.Key);
-    const message = this.locationData.LocalizedName + ' has been removed';
-    this.showToast(message);
+  clickOnRemoveFromFavorite() {
+    this.removeFromFavorite.emit();
   }
 
   getCurrentWeather() {
@@ -46,13 +41,5 @@ export class WeatherItemComponent implements OnInit {
       this.isDataReady = true;
     });
   }
-
-  showToast(message: string) {
-    this.toastService.open(message, '', {
-      duration: 2000,
-    });
-  }
-
-
 
 }

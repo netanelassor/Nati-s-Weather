@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, startWith, map } from 'rxjs/operators';
 import { LocationModel } from 'src/app/providers/models/locations.model';
 import { WeatherService } from 'src/app/components/weather/weather.service';
 
@@ -22,10 +22,10 @@ export class SearchLocationComponent implements OnInit {
   ngOnInit(): void {
     this.searchControl.valueChanges
       .pipe(
-        debounceTime(500)
+        debounceTime(400),
       )
       .subscribe((input) => {
-        if (input.length >= 2) {
+        if (this.searchControl.valid && input.length >= 2) {
           this.suggestedLocationList$ = this.weatherService.getLocationSuggestion(input);
         }
       });

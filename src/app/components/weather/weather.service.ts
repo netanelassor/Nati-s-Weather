@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, BehaviorSubject, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { WeatherItemModel } from '../../providers/models/weather-item.model';
 import { CurrentWeather } from '../../providers/models/current-weather.model';
@@ -38,7 +38,8 @@ export class WeatherService {
       .pipe(
         map((response: any) =>
           this.convertDailyWeatherToMainModel(response.DailyForecasts)
-        ));
+        )
+      );
   }
 
 
@@ -65,7 +66,8 @@ export class WeatherService {
       ).pipe(
         map((result: any) =>
           this.convertLocationToMainModel(result)
-        ));
+        )
+      );
   }
 
 
@@ -94,10 +96,6 @@ export class WeatherService {
     }
   }
 
-
-
-
-
   convertCurrentWeatherToMainModel(currentWeather: CurrentWeather): WeatherItemModel {
     const weatherItem: WeatherItemModel = {
       date: currentWeather.LocalObservationDateTime,
@@ -109,7 +107,6 @@ export class WeatherService {
           Value: currentWeather.Temperature.Metric.Value,
           Unit: currentWeather.Temperature.Metric.Unit,
           UnitType: currentWeather.Temperature.Metric.UnitType
-
         },
         min: null
       }
@@ -141,6 +138,32 @@ export class WeatherService {
       }
     }));
     return weatherItem;
+  }
+
+
+  //I've decided to marge some icons
+  getCurrentWeatherIcon(weatherIcon: number) {
+    if (weatherIcon <= 5) {
+      return 'sunny';
+    }
+    if (weatherIcon === 6) {
+      return 'sunny-cloudy';
+    }
+    if (weatherIcon <= 11) {
+      return 'cloud';
+    }
+    if (weatherIcon <= 18) {
+      return 'rain';
+    }
+    if (weatherIcon <= 29) {
+      return 'snow';
+    }
+    if (weatherIcon <= 30) {
+      return 'sunny';
+    }
+    if (weatherIcon <= 44) {
+      return 'night';
+    }
   }
 
 }
