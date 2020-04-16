@@ -35,6 +35,7 @@ export class FavoritesComponent implements OnInit {
     this.favoriteList$ = this.favoriteService.getFavoriteList();
   }
 
+
   addFavorites(): void {
     const dialogRef = this.dialog.open(AddCityModalComponent, {
       width: '500px',
@@ -56,15 +57,6 @@ export class FavoritesComponent implements OnInit {
     this.favoriteService.removeFromFavorite(location.Key);
     const message = location.LocalizedName + ' has been removed';
     this.showToast(message, true);
-  }
-
-  getCurrentWeather(location: LocationModel) {
-    this.weatherService.getCurrentWeatherByLocation(location.Key).subscribe(result => {
-      return result;
-    },
-    error => {
-      this.showToast(error.message, false);
-    });
   }
 
   showToast(message: string, success: boolean): void {
