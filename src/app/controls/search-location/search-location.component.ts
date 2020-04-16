@@ -15,7 +15,6 @@ export class SearchLocationComponent implements OnInit {
 
   searchControl = new FormControl();
   suggestedLocationList$: Observable<LocationModel[]>;
-  selectedLocation: LocationModel;
 
   constructor(
     private weatherService: WeatherService
@@ -38,8 +37,6 @@ export class SearchLocationComponent implements OnInit {
   }
 
   selectLocation(location: LocationModel) {
-    this.selectedLocation = location;
-    this.weatherService.setSelectedLocation(location);
     this.setSelectedLocation.emit(location);
   }
 
