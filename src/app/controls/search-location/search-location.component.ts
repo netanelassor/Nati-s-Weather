@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -11,6 +11,8 @@ import { LocationModel } from 'src/app/providers/models/locations.model';
   styleUrls: ['./search-location.component.scss']
 })
 export class SearchLocationComponent implements OnInit {
+  @Output() setSelectedLocation: EventEmitter<LocationModel> = new EventEmitter<LocationModel>();
+
   searchControl = new FormControl();
   suggestedLocationList$: Observable<LocationModel[]>;
   selectedLocation: LocationModel;
@@ -38,6 +40,7 @@ export class SearchLocationComponent implements OnInit {
   selectLocation(location: LocationModel) {
     this.selectedLocation = location;
     this.weatherService.setSelectedLocation(location);
+    this.setSelectedLocation.emit(location);
   }
 
 }

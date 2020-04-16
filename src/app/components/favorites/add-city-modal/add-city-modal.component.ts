@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { LocationModel } from '../../../providers/models/locations.model';
-import { WeatherService } from '../../weather/weather.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-city-modal',
@@ -11,21 +9,17 @@ import { Observable } from 'rxjs';
 })
 export class AddCityModalComponent implements OnInit {
 
-  selectedLocation: LocationModel;
+  selectedLocation: LocationModel = null;
 
   constructor(
-    private weatherService: WeatherService,
     public dialogRef: MatDialogRef<AddCityModalComponent>,
   ) { }
 
   ngOnInit(): void {
-    this.getSelectedLocation();
   }
 
-  getSelectedLocation(): void {
-    this.weatherService.getSelectedLocation().subscribe(locations => {
-      this.selectedLocation = locations;
-    });
+  getSelectedLocation(location: LocationModel): void {
+    this.selectedLocation = location;
   }
 
   closeModal(): void {

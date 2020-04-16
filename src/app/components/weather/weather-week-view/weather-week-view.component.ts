@@ -23,7 +23,7 @@ export class WeatherWeekViewComponent implements OnInit {
   currentWeather: WeatherItemModel;
   currentWeatherIcon: string;
   includedInFavorite = false;
-
+  isDataReady = false;
   constructor(
     private weatherService: WeatherService,
     private favoriteService: FavoritesService,
@@ -31,18 +31,28 @@ export class WeatherWeekViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.weatherService.getDeviceLocation();
-
-    this.weatherService.getSelectedLocation().subscribe(
-      (location: LocationModel) => {
-        this.selectedLocation = location;
-        this.updateLocation(location);
-      },
-      error => {
-        alert(error.message);
-      });
+    this.getDeviceLocation();
   }
 
+  getDeviceLocation(): void {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.weatherService.getLocationKeyByGeoPosition(position.coords.latitude, position.coords.longitude)
+          .subscribe((result: LocationModel) => {
+            this.selectedLocation = result;
+            this.updateLocation(this.selectedLocation);
+            this.isDataReady = true;
+          });
+      });
+    } else {
+      this.selectedLocation = this.weatherService.defaultLocation;
+    }
+  }
+
+  getSelectedLocation(location: LocationModel): void {
+    this.selectedLocation = location;
+    this.updateLocation(location);
+  }
 
   getWeatherForecast(locationKey: number): void {
     this.weeklyData$ = this.weatherService.getWeatherForecast(locationKey);

@@ -70,28 +70,6 @@ export class WeatherService {
       );
   }
 
-  setSelectedLocation(location: LocationModel): Observable<LocationModel> {
-    this.selectedLocationSubject.next(location);
-    return this.selectedLocationSubject.asObservable();
-  }
-
-  getSelectedLocation(): Observable<LocationModel> {
-    return this.selectedLocationSubject.asObservable();
-  }
-
-  getDeviceLocation(): void {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.getLocationKeyByGeoPosition(position.coords.latitude, position.coords.longitude).subscribe((result: LocationModel) => {
-          this.setSelectedLocation(result);
-        });
-      });
-    } else {
-      this.setSelectedLocation(this.defaultLocation);
-      alert('Geolocation is not supported by this browser.');
-    }
-  }
-
   convertCurrentWeatherToMainModel(currentWeather: CurrentWeather): WeatherItemModel {
     const weatherItem: WeatherItemModel = {
       date: currentWeather.LocalObservationDateTime,
