@@ -43,12 +43,21 @@ export class WeatherWeekViewComponent implements OnInit {
             this.updateLocation(this.selectedLocation);
             this.isDataReady = true;
           },
-          error => {
-            this.showToast(error.message, false);
-          });
+            error => {
+              this.showToast(error.message, false);
+            });
+      }, () => {
+        console.log('location not allowed on the current device');
+        this.selectedLocation = this.weatherService.defaultLocation;
+        this.updateLocation(this.selectedLocation);
+        this.isDataReady = true;
+
       });
     } else {
+      console.log('browser not support find location');
       this.selectedLocation = this.weatherService.defaultLocation;
+      this.updateLocation(this.selectedLocation);
+      this.isDataReady = true;
     }
   }
 
