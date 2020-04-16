@@ -1,14 +1,19 @@
 .search-box-wrapper {
     text-align: center;
-    
+
     .location-name {
         color: var(--text-color5);
     }
 }
 
+
 @media (min-width: 599px) {
     .search-box-field {
         min-width: 20rem;
     }
+}
+
+::ng-deep.mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: rgba(256, 256, 256, 0.4) !important;
 }
 

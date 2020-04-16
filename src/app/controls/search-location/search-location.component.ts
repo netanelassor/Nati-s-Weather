@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { debounceTime, startWith, map } from 'rxjs/operators';
-import { LocationModel } from 'src/app/providers/models/locations.model';
+import { debounceTime } from 'rxjs/operators';
 import { WeatherService } from 'src/app/components/weather/weather.service';
+import { LocationModel } from 'src/app/providers/models/locations.model';
 
 @Component({
   selector: 'app-search-location',

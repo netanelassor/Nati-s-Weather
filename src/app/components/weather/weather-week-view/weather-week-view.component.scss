@@ -4,7 +4,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
-    
+
     .location-name {
         color: white;
         font-size: 3rem;
@@ -24,24 +24,12 @@
         font-size: 2rem;
         font-weight: bold;
     }
-
-    .favorite-button {
-        position: absolute;
-        z-index: 1;
-        right: 0%;
-        top: -4%;
-    }
 }
 
-
-
-
-.search-box-wrapper {
-    text-align: center;
-}
 
 @media (min-width: 599px) {
     .search-box-field {
         min-width: 20rem;
     }
 }
+

@@ -10,11 +10,17 @@ body {
     padding: 0;
     height: 100%;
     margin: 0;
-    font-family: Lato, sans-serif;
+    display: block;
+    font-family: Lato, sans-serif ;
 }
 
+.notif-success {
+        background-color: var(--success-color) !important;
+}
 
-
+.notif-error {
+        background-color: var(--error-color) !important;
+}
 
 
 /////////////////////////////

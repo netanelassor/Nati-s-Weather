@@ -1,15 +1,28 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { FavoritesService } from '../../favorites/favorites.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { LocationModel } from '../../../providers/models/locations.model';
 import { WeatherItemModel } from '../../../providers/models/weather-item.model';
 import { WeatherService } from '../weather.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-weather-item',
   templateUrl: './weather-item.component.html',
-  styleUrls: ['./weather-item.component.scss']
+  styleUrls: ['./weather-item.component.scss'],
+  animations: [
+    trigger('loadItemAnimation',
+      [
+        transition(':enter',
+          [
+            style({ height: 0, opacity: 0 }),
+            animate('0.3s ease-out',
+              style({ height: 300, opacity: 1 }))
+          ]
+        )
+      ]
+    )
+  ]
 })
+
 export class WeatherItemComponent implements OnInit {
 
   @Input() weatherItem?: WeatherItemModel;

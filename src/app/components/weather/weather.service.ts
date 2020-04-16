@@ -70,10 +70,6 @@ export class WeatherService {
       );
   }
 
-
-
-
-
   setSelectedLocation(location: LocationModel): Observable<LocationModel> {
     this.selectedLocationSubject.next(location);
     return this.selectedLocationSubject.asObservable();

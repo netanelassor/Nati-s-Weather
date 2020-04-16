@@ -1,7 +1,7 @@
-<div class="card text-center weather-weekly-card" *ngIf="isDataReady">
+<div class="card text-center weather-weekly-card" *ngIf="isDataReady" [@loadItemAnimation]>
 
     <ng-container *ngIf="isFavoriteContext">
-        <button mat-icon-button color="warn" class="btn-remove-favorite" (click)="clickOnRemoveFromFavorite()">
+        <button mat-button color="warn" class="btn-remove-favorite" (click)="clickOnRemoveFromFavorite()">
             <mat-icon>remove_circle_outline</mat-icon>
             Remove
         </button>

@@ -37,9 +37,12 @@ export class WeatherWeekViewComponent implements OnInit {
       (location: LocationModel) => {
         this.selectedLocation = location;
         this.updateLocation(location);
+      },
+      error => {
+        alert(error.message);
       });
-
   }
+
 
   getWeatherForecast(locationKey: number): void {
     this.weeklyData$ = this.weatherService.getWeatherForecast(locationKey);
@@ -49,7 +52,10 @@ export class WeatherWeekViewComponent implements OnInit {
     this.weatherService.getCurrentWeatherByLocation(locationKey).subscribe(result => {
       this.currentWeather = result;
       this.currentWeatherIcon = `assets/img/${this.weatherService.getCurrentWeatherIcon(this.currentWeather.weatherIcon)}.svg`;
-    });
+    },
+      error => {
+        this.showToast(error.message, false);
+      });
   }
 
   setLocationAsFavorite(): void {
@@ -59,7 +65,7 @@ export class WeatherWeekViewComponent implements OnInit {
     const message =
       success ? this.selectedLocation.LocalizedName + ' added to favorites successfully' : 'Sorry, something went wrong, please try again';
 
-    this.showToast(message);
+    this.showToast(message, true);
   }
 
   updateLocation(location: LocationModel): void {
@@ -70,9 +76,11 @@ export class WeatherWeekViewComponent implements OnInit {
 
   /////Healper Functions/////
 
-  showToast(message: string): void {
+  showToast(message: string, success: boolean): void {
     this.toastService.open(message, '', {
-      duration: 2000,
+      duration: 3000,
+      panelClass: success ? ['notif-success'] : ['notif-error']
+
     });
   }
 

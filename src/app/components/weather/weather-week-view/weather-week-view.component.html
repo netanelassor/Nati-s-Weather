@@ -1,19 +1,21 @@
 <div class="row location-details-wrapper justify-content-center"
-    [ngStyle]="{'background-image': 'linear-gradient(to bottom, rgba(245, 246, 252, 0.3), rgba(117, 19, 93, 0.6)), url('+ currentWeatherIcon+')'}">
+    [ngStyle]="{'background-image': 'linear-gradient(to bottom, rgba(245, 246, 252, 0.3), rgba(117, 19, 93, 0.6)), url('+ currentWeatherIcon+')'}"
+    >
 
-    <div class="col-12 search-box-wrapper">
+    <div class="col-12 text-center">
         <app-search-location></app-search-location>
     </div>
 
-    <div class="col-2 col-sm-2 col-md-1 col-lg-1 col-xl-1">
+    <div class="col-2 col-sm-2 col-md-1 col-lg-1 col-xl-1 text-right">
         <button mat-mini-fab color="primary" class="favorite-button" (click)="setLocationAsFavorite()"
             *ngIf="!includedInFavorite">
-            <mat-icon>star_outline</mat-icon>
+            <mat-icon>star</mat-icon>
         </button>
     </div>
+
     <div class="col-10 col-sm-8 col-md-8 col-lg-8 col-xl-8">
         <h2 class="location-name"> {{selectedLocation?.LocalizedName}}
-            <small class="country"> 
+            <small class="country">
                 |
                 {{selectedLocation?.Country?.LocalizedName}}
             </small>
@@ -25,8 +27,8 @@
 </div>
 
 
-<div class="row justify-content-center">
-    <ng-container *ngFor="let day of weeklyData$ | async">
+<div class="row justify-content-center" >
+    <ng-container *ngFor="let day of weeklyData$ | async" >
         <div class="col-10 col-sm-6 col-md-4 col-lg-4  col-xl-2">
             <app-weather-item [weatherItem]="day"></app-weather-item>
         </div>

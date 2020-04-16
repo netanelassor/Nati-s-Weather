@@ -31,22 +31,25 @@
     right: 40px;
 }
 
-.weather-icon {
-    height: 100%;
-    width: 100%;
-}
 
 
-.text-row-1 {
-    color: var(--text-color2);
+.favorite-empty{
+    .weather-icon {
+        height: 100%;
+        width: 100%;
+    }
+    .text-row-1 {
+        color: var(--text-color2);
+    }
+    
+    .text-row-2 {
+        color: var(--text-color4);
+        font-size: 22px;
+    }
+    
+    .text-row-3 {
+        color: var(--text-color1);
+        font-size: 18px;
+    }
 }
 
-.text-row-2 {
-    color: var(--text-color4);
-    font-size: 22px;
-}
-
-.text-row-3 {
-    color: var(--text-color1);
-    font-size: 18px;
-}

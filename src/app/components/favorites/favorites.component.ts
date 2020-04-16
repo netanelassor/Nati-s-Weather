@@ -47,7 +47,7 @@ export class FavoritesComponent implements OnInit {
         const message =
           success ? result.LocalizedName + ' added to favorites successfully' : 'Sorry, something went wrong, please try again';
 
-        this.showToast(message);
+        this.showToast(message, success);
       }
     });
   }
@@ -55,18 +55,22 @@ export class FavoritesComponent implements OnInit {
   removeFromFavorite(location: LocationModel) {
     this.favoriteService.removeFromFavorite(location.Key);
     const message = location.LocalizedName + ' has been removed';
-    this.showToast(message);
+    this.showToast(message, true);
   }
 
   getCurrentWeather(location: LocationModel) {
     this.weatherService.getCurrentWeatherByLocation(location.Key).subscribe(result => {
       return result;
+    },
+    error => {
+      this.showToast(error.message, false);
     });
   }
 
-  showToast(message: string): void {
+  showToast(message: string, success: boolean): void {
     this.toastService.open(message, '', {
-      duration: 2000,
+      duration: 3000,
+      panelClass: success ? ['notif-success'] : ['notif-error']
     });
   }
 
