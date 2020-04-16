@@ -42,6 +42,9 @@ export class WeatherWeekViewComponent implements OnInit {
             this.selectedLocation = result;
             this.updateLocation(this.selectedLocation);
             this.isDataReady = true;
+          },
+          error => {
+            this.showToast(error.message, false);
           });
       });
     } else {

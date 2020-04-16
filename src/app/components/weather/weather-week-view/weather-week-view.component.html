@@ -1,36 +1,48 @@
-<div class="row location-details-wrapper justify-content-center"
-    [ngStyle]="{'background-image': 'linear-gradient(to bottom, rgba(245, 246, 252, 0.3), rgba(117, 19, 93, 0.6)), url('+ currentWeatherIcon+')'}"
-    *ngIf="isDataReady">
+<ng-container *ngIf="isDataReady">
 
-    <div class="col-12 text-center">
-        <app-search-location (setSelectedLocation)="getSelectedLocation($event)"></app-search-location>
-    </div>
-
-    <div class="col-2 col-sm-2 col-md-1 col-lg-1 col-xl-1 text-right">
-        <button mat-mini-fab color="primary" class="favorite-button" (click)="setLocationAsFavorite()"
-            *ngIf="!includedInFavorite">
-            <mat-icon>star</mat-icon>
-        </button>
-    </div>
-
-    <div class="col-10 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-        <h2 class="location-name"> {{selectedLocation?.LocalizedName}}
-            <small class="country">
-                |
-                {{selectedLocation?.Country?.LocalizedName}}
-            </small>
-        </h2>
-        <h3 class="weather-description">{{currentWeather?.weatherDescription}}
-            <small> now with {{currentWeather?.temperature?.max?.Value | number:'1.0-0'}}°</small>
-        </h3>
-    </div>
-</div>
-
-
-<div class="row justify-content-center" >
-    <ng-container *ngFor="let day of weeklyData$ | async" >
-        <div class="col-10 col-sm-6 col-md-4 col-lg-4  col-xl-2">
-            <app-weather-item [weatherItem]="day"></app-weather-item>
+    <div class="row location-details-wrapper justify-content-center"
+        [ngStyle]="{'background-image': 'linear-gradient(to bottom, rgba(245, 246, 252, 0.3), rgba(117, 19, 93, 0.6)), url('+ currentWeatherIcon+')'}">
+        <div class="col-12 text-center">
+            <app-search-location (setSelectedLocation)="getSelectedLocation($event)"></app-search-location>
         </div>
-    </ng-container>
-</div>
+
+        <div class="col-2 col-sm-2 col-md-1 col-lg-1 col-xl-1 text-right">
+            <button mat-mini-fab color="primary" class="favorite-button" (click)="setLocationAsFavorite()"
+                *ngIf="!includedInFavorite">
+                <mat-icon>star</mat-icon>
+            </button>
+        </div>
+
+        <div class="col-10 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+            <h2 class="location-name"> {{selectedLocation?.LocalizedName}}
+                <small class="country">
+                    |
+                    {{selectedLocation?.Country?.LocalizedName}}
+                </small>
+            </h2>
+            <h3 class="weather-description">{{currentWeather?.weatherDescription}}
+                <small> now with {{currentWeather?.temperature?.max?.Value | number:'1.0-0'}}°</small>
+            </h3>
+        </div>
+    </div>
+
+
+    <div class="row justify-content-center">
+        <ng-container *ngFor="let day of weeklyData$ | async">
+            <div class="col-10 col-sm-6 col-md-4 col-lg-4  col-xl-2">
+                <app-weather-item [weatherItem]="day"></app-weather-item>
+            </div>
+        </ng-container>
+    </div>
+
+</ng-container>
+
+<ng-container *ngIf="!isDataReady">
+    <div class="text-center loader">
+        <div>
+            <mat-icon class="weather-icon" svgIcon="weather" aria-hidden="false"></mat-icon>
+            <h3 class="text-row-1">Loading...</h3>
+        </div>
+        <app-weather-icon></app-weather-icon>
+    </div>
+</ng-container>
